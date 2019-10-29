@@ -133,7 +133,10 @@ public class Juego {
 
 
         }
-        
+
+        void Salto(){
+            
+        }
     }
 }
 
