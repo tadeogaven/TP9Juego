@@ -94,20 +94,20 @@ public class Juego {
             _Avatar=Sprite.sprite("Avatar.png");
 
             Log.d("Poner Jugador", "Comienzo a ubicar al avatar");
-            CCPoint posicionInicial;
-            posicionInicial=new CCPoint();
-            posicionInicial.x=_Pantalla.getWidth()/2;
-            posicionInicial.y=_Pantalla.getHeight();
-            _Avatar.setPosition(posicionInicial.x,posicionInicial.y);
+            CCPoint posicionInicialAvatar;
+            posicionInicialAvatar=new CCPoint();
+            posicionInicialAvatar.x=_Pantalla.getWidth()/2;
+            posicionInicialAvatar.y=_Pantalla.getHeight();
+            _Avatar.setPosition(posicionInicialAvatar.x,posicionInicialAvatar.y);
 
 
-            CCPoint posicionFinal;
-            posicionFinal=new CCPoint();
-            posicionFinal.x=posicionInicial.x;
-            posicionFinal.y=0;
+            CCPoint posicionFinalAvatar;
+            posicionFinalAvatar=new CCPoint();
+            posicionFinalAvatar.x=posicionInicialAvatar.x;
+            posicionFinalAvatar.y=0;
 
              Log.d("Poner avatar","Inicio el movimiento");
-            _Avatar.runAction(MoveTo.action(3,posicionFinal.x,posicionFinal.y));
+            _Avatar.runAction(MoveTo.action(3,posicionFinalAvatar.x,posicionFinalAvatar.y));
 
 
             Log.d("Poner Jugador","Lo agrego a la capa");
@@ -119,23 +119,13 @@ public class Juego {
             _Plataforma=Sprite.sprite("Plataforma.png");
 
             Log.d("Poner plataforma","Determino posicion inical");
-            CCPoint posicionInicial;
-            posicionInicial=new CCPoint();
-            posicionInicial.x=_Pantalla.getWidth()/2;
-            posicionInicial.y=_Pantalla.getHeight()/2;
+            CCPoint posicionInicialPlataforma;
+            posicionInicialPlataforma=new CCPoint();
+            posicionInicialPlataforma.x=_Pantalla.getWidth()/2;
+            posicionInicialPlataforma.y=_Pantalla.getHeight()/2;
 
             Log.d("Poner plataforma","Ubico el Sprite");
-            _Plataforma.setPosition(posicionInicial.x,posicionInicial.y);
-
-            Log.d("Poner plataforma","Determino la posicion final");
-            CCPoint posicionFinal;
-            posicionFinal=new CCPoint();
-            posicionFinal.x=posicionInicial.x;
-            posicionFinal.y=0;
-
-           // Log.d("Poner plataforma","Inicio el movimiento");
-            //_Plataforma.runAction(MoveTo.action(3,posicionFinal.x,posicionFinal.y));
-
+            _Plataforma.setPosition(posicionInicialPlataforma.x,posicionInicialPlataforma.y);
 
 
             Log.d("Poner plataforma","Lo agrego a la capa");
@@ -143,6 +133,7 @@ public class Juego {
 
 
         }
+        
     }
 }
 
