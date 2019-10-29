@@ -23,4 +23,12 @@ public class MainActivity extends Activity {
         view = new CCGLSurfaceView(this);
         setContentView(view);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Juego juego;
+        juego = new Juego(view);
+        juego.InicioJuego();
+    }
 }
