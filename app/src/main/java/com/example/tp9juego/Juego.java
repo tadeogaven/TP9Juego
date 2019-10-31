@@ -23,6 +23,9 @@ public class Juego {
     CCSize _Pantalla;
     Sprite _Avatar;
     Sprite _Plataforma;
+    Sprite _FlechaIz;
+    Sprite _FlechaDe;
+    ArrayList _listaPlataforma;
 
     public Juego(CCGLSurfaceView vistaAUsar){
         _JuegoVista=vistaAUsar;
@@ -57,16 +60,25 @@ public class Juego {
     }
 
     class capaJuego extends Layer{
-        public capaJuego(){
-            Log.d("CapaJuego","Comienza el constructor");
+        public capaJuego() {
+            Log.d("CapaJuego", "Comienza el constructor");
 
-            Log.d("CapaJuego","Ubico al fondo en posicion inicial");
+            Log.d("CapaJuego", "Ubico al fondo en posicion inicial");
             ponerImagenFondo();
-            Log.d("CapaJuego","Ubico al avatar en posicion inicial");
+            Log.d("CapaJuego", "Ubico al avatar en posicion inicial");
             ponerAvatar();
-            Log.d("CapaJuego","Ubico a la plataforma en posicion inicial");
+            Log.d("CapaJuego", "Ubico a la plataforma en posicion inicial");
             ponerPlataforma();
+            Log.d("CapaJuego", "Ubico a la flecha izquierda en posicion inicial");
+            ponerFlechaIzquierda();
+            ;
+            Log.d("CapaJuego", "Ubico a la flecha derecha en posicion inicial");
+            ponerFlechaDerecha();
+            ;
 
+            Log.d("CapaJuego","Pongo una plataforma");
+            _listaPlataforma = new ArrayList();
+            super.schedule("ponerPlataforma",1.0f);
         }
 
         void ponerImagenFondo(){
@@ -134,8 +146,84 @@ public class Juego {
 
         }
 
-        void Salto(){
-            
+        void ponerFlechaIzquierda(){
+            Log.d("PonerFlechaIz","Voy a armar el Sprite de la flecha izquierda");
+            _FlechaIz=Sprite.sprite("flechaizquierda.png");
+
+            Log.d("PonerFlechaIz","Determino posicion inical");
+            CCPoint posicionInicialFlechaIzq;
+            posicionInicialFlechaIzq=new CCPoint();
+            posicionInicialFlechaIzq.x=_Pantalla.getWidth()/5;
+            posicionInicialFlechaIzq.y=_Pantalla.getHeight()/7;
+
+            Log.d("PonerFlechaIz","Ubico el Sprite");
+            _FlechaIz.setPosition(posicionInicialFlechaIzq.x,posicionInicialFlechaIzq.y);
+
+
+            Log.d("PonerFlechaIz","Lo agrego a la capa");
+            super.addChild(_FlechaIz);
+        }
+        void ponerFlechaDerecha(){
+            Log.d("PonerFlechaDer","Voy a armar el Sprite de la flecha derecha");
+            _FlechaDe=Sprite.sprite("flechaderecha.png");
+
+            Log.d("PonerFlechaDer","Determino posicion inical");
+            CCPoint posicionInicialFlechaDer;
+            posicionInicialFlechaDer=new CCPoint();
+            posicionInicialFlechaDer.x=_Pantalla.getWidth()/1.2f;
+            posicionInicialFlechaDer.y=_Pantalla.getHeight()/7;
+
+            Log.d("PonerFlechaDer","Ubico el Sprite");
+            _FlechaDe.setPosition(posicionInicialFlechaDer.x,posicionInicialFlechaDer.y);
+
+
+            Log.d("PonerFlechaDer","Lo agrego a la capa");
+            super.addChild(_FlechaDe);
+        }
+
+        public boolean IntereseccionEntreSprites(Sprite Sprite1, Sprite Sprite2) {
+            Boolean HayInterseccion = false;
+
+            Float Sp1Arriba, Sp1Abajo, Sp1Derecha, Sp1Izquierda, Sp2Arriba, Sp2Abajo, Sp2Derecha, Sp2Izquierda;
+
+            Sp1Arriba=Sprite1.getPositionY() + Sprite1.getHeight()/2;
+            Sp1Abajo=Sprite1.getPositionY() - Sprite1.getHeight()/2;
+            Sp1Derecha=Sprite1.getPositionX() + Sprite1.getWidth()/2;
+            Sp1Izquierda=Sprite1.getPositionX() - Sprite1.getWidth()/2;
+            Sp2Arriba=Sprite2.getPositionY() + Sprite2.getHeight()/2;
+            Sp2Abajo=Sprite2.getPositionY() - Sprite2.getHeight()/2;
+            Sp2Derecha=Sprite2.getPositionX() + Sprite2.getWidth()/2;
+            Sp2Izquierda=Sprite2.getPositionX() - Sprite2.getWidth()/2;
+
+
+//Me fijo si el vértice superior derecho de Sp1 está dentro de Sp2
+            if (Sp1Arriba>=Sp2Abajo && Sp1Arriba<=Sp2Arriba &&
+            Sp1Derecha>=Sp2Izquierda && Sp1Derecha<=Sp2Derecha) {
+                HayInterseccion=true;
+            }
+//Me fijo si el vértice superior izquierdo de Sp1 está dentro de Sp2
+            if (Sp1Arriba>=Sp2Abajo && Sp1Arriba<=Sp2Arriba &&
+            Sp1Izquierda>=Sp2Izquierda && Sp1Izquierda<=Sp2Derecha) {
+                HayInterseccion=true;
+            }
+//Me fijo si el vértice inferior derecho de Sp1 está dentro de Sp2
+            if (Sp1Abajo>=Sp2Abajo && Sp1Abajo<=Sp2Arriba &&
+            Sp1Derecha>=Sp2Izquierda && Sp1Derecha<=Sp2Derecha) {
+                HayInterseccion=true;
+
+            }
+//Me fijo si el vértice inferior izquierdo de Sp1 está dentro de Sp2
+            if (Sp1Abajo>=Sp2Abajo && Sp1Abajo<=Sp2Arriba &&
+            Sp1Izquierda>=Sp2Izquierda && Sp1Izquierda<=Sp2Derecha) {
+                HayInterseccion=true;
+            }
+//Me fijo si el vértice superior derecho de Sp2 está dentro de Sp1
+            if (Sp2Arriba>=Sp1Abajo && Sp2Arriba<=Sp1Arriba &&
+            Sp2Derecha>=Sp1Izquierda && Sp2Derecha<=Sp1Derecha) {
+                HayInterseccion=true;
+            }
+
+            return  HayInterseccion;
         }
     }
 }
